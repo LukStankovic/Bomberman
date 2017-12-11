@@ -38,6 +38,7 @@ public class GenerateMap {
 		this.save(map, width, height, "./data/maps/base.map");
 	}
 	
+
 	private void save(int[][] map, int width, int height, String filePath) {
 		PrintWriter in = null;
 		
@@ -47,6 +48,7 @@ public class GenerateMap {
 			for (int i = 0; i < height; i++) {
 				for (int j = 0; j < width; j++) {
 					in.print(map[i][j]);
+					in.print(" ");
 				}
 				in.println();
 			}

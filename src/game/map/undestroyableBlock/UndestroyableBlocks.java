@@ -22,6 +22,10 @@ public class UndestroyableBlocks {
 		return blocks;
 	}
 	
+	public Block getBlockAtPosition(int x, int y) {
+		return blocks[x][y];
+	}
+	
 	public void setBlockAtPosition(int x, int y, Block blockType) {
 		blocks[x][y] = blockType;
 	}

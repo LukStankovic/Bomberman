@@ -15,7 +15,7 @@ import java.util.Scanner;
  * @author lukstankovic
  */
 public class Loader {
-	public void LoadMap(String fileMap, Map map) {
+	public void loadMap(String fileMap, Map map) {
 		Scanner sc = null;
 		
 		try {
@@ -23,10 +23,8 @@ public class Loader {
 			for (int i = 0; i < map.getSizeOfMap(); i++) {
 				for (int j = 0; j < map.getSizeOfMap(); j++) {
 					int tmp = sc.nextInt();
-					System.out.println(tmp + " ");
 					map.addBlockIntoMap(i, j, tmp);
 				}
-				System.out.println("");
 			}
 		} catch (FileNotFoundException ex) {
 			System.err.println("File with map was not found!");
