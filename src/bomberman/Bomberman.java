@@ -14,6 +14,7 @@ import game.map.undestroyableBlock.Block;
 import java.awt.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.Animation;
@@ -48,19 +49,29 @@ public class Bomberman extends Application {
 	
 	private Map map;
 	
-	private Player player = new Player(100, 100);
+	private Player player;
 	
 	private GraphicsContext  movableObjects;
 			
 	
 	@Override
 	public void start(Stage primaryStage) {
-	
+		
+		GenerateMap gm = new GenerateMap();	
+		//for (int i = 6; i < 100; i++) {
+			gm.generate(25, 25, 0);
+	//	}
+				
+		
 		map = new Map();
+		Random rand = new Random();
+		int mapId = rand.nextInt(99);
 		Loader loader = new Loader();
-		loader.loadMap("./data/maps/base.map", map);
+		loader.loadMap("./data/maps/map_" + mapId + ".map", map);
+		//map.generateBricks();
+		player = new Player(30, 30, map);
 		map.addMovableObject(player);
-
+	
 		StackPane root = new StackPane();
 		drawer = new Drawer();
 		
@@ -88,39 +99,7 @@ public class Bomberman extends Application {
 		};
 				
 		timer.start();
-/*
-		GenerateMap gm = new GenerateMap();	
-		gm.generateBaseMap(27, 27);
-*/		
-	
 
- /*
-		int blockSize = 32;
-		Pane root = new Pane();
-		Scene scene = new Scene(root, 27*blockSize, 27*blockSize);
-		
-		
-		for (int i = 0; i < 27; i++) {
-			for (int j = 0; j < 27; j++) {
-				//System.out.println(map.getAtPosition(i, j));
-				if (map.getAtPosition(i, j) == Block.WALL) {
-				//	scene.setFill(Color.GREY);
-					System.out.print("X");
-				} else if (map.getAtPosition(i, j) == Block.GRASS) {
-				//	scene.setFill(Color.GREEN);
-					System.out.print("-");
-				} /*else if (map.getAtPosition(i, j) == Block.BRICK) {
-					System.out.print("B");
-				}*/
-/*		}
-			System.out.println("");
-		}
-		
-		primaryStage.setTitle("Bomberman");
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		primaryStage.show();*/
-		
 	}
 
 	/**

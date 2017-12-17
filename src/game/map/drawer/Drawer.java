@@ -24,6 +24,8 @@ public class Drawer {
 	private Image imgWall = new Image("file:./data/sprites/wall.png");
 	
 	private Image imgPlayer = new Image("file:./data/sprites/man.png");
+	
+	private Image imgBrick = new Image("file:./data/sprites/brick.png");
 
 	public void updateUndestroyableBlocks(int sizeX, int sizeY, Map map, GraphicsContext gc) {
 		gc.setFill(Color.GREEN);
@@ -36,6 +38,8 @@ public class Drawer {
 			for (int j = 0; j < map.getSizeOfMap(); j++) {
 				if (blocks[i][j] == Block.WALL) {
 					gc.drawImage(imgWall, i*sizeOfBlockX, j*sizeOfBlockY, sizeOfBlockX, sizeOfBlockY);
+				} else if (blocks[j][i] == Block.BRICK) {
+					gc.drawImage(imgBrick, i*sizeOfBlockX, j*sizeOfBlockY, sizeOfBlockX, sizeOfBlockY);
 				}
 			}
 		}
@@ -46,14 +50,14 @@ public class Drawer {
 		ArrayList<MovableObject> objects = map.getMovableObjects();
 		double sizeOfBlockX = (double)sizeX/map.getSizeOfMap();
 		double sizeOfBlockY = (double)sizeY/map.getSizeOfMap();
-		
+
 		for (MovableObject mo : objects) {
 			if (mo instanceof Player) {
 				ImageView iv = new ImageView(imgPlayer);
 				iv.setRotate(mo.getAngle());
 				SnapshotParameters params = new SnapshotParameters();
 				params.setFill(Color.TRANSPARENT);
-				gc.drawImage(iv.snapshot(params, null), mo.getPositionX() + 2, mo.getPositionY() + 22, sizeOfBlockX - 4, sizeOfBlockY - 4);
+				gc.drawImage(iv.snapshot(params, null), mo.getPositionX(), mo.getPositionY(), sizeOfBlockX - 8, sizeOfBlockY - 8);
 			}
 		}
 		

@@ -5,6 +5,8 @@
  */
 package game.map.moveableObjects;
 
+import game.map.Map;
+import game.map.undestroyableBlock.Block;
 import java.util.ArrayList;
 
 /**
@@ -22,7 +24,7 @@ public class MovableObjects {
 		objects.add(object);
 	}
 	
-	public void updatePositionOfAllObjects() {
+	public void updatePositionOfAllObjects(Map map) {
 		for (MovableObject mo : objects) {
 			mo.updatePosition();
 		}

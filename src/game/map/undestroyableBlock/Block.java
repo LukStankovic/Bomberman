@@ -10,5 +10,5 @@ package game.map.undestroyableBlock;
  * @author lukstankovic
  */
 public enum Block {
-	WALL, GRASS
+	WALL, GRASS, BRICK
 }

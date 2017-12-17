@@ -8,6 +8,7 @@ package game.map;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,6 +39,31 @@ public class GenerateMap {
 		this.save(map, width, height, "./data/maps/base.map");
 	}
 	
+	
+	public void generate(int width, int height, int id) {
+		int[][] map = new int[height][width];
+		
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if (i == 0 || j == 0 || i == height -1 || j == width -1) {
+					map[i][j] = 1; 
+				} else {
+					if (i % 2 == 0 && j % 2 == 0) {
+						map[i][j] = 1;
+					} else {
+						Random rand = new Random();
+						
+						if (rand.nextInt(4) == 1 && i != 1 && j != 1) {
+							map[i][j] = 2;
+						} else {
+							map[i][j] = 0;
+						}
+					}
+				}
+			}
+		}
+		this.save(map, width, height, "./data/maps/map_" + id + ".map");
+	}
 
 	private void save(int[][] map, int width, int height, String filePath) {
 		PrintWriter in = null;
