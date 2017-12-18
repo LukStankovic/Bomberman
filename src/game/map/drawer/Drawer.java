@@ -95,8 +95,8 @@ public class Drawer {
 			} else if (mo instanceof Enemy) {
 				iv = new ImageView(imgEnemy);
 			}	
-			System.out.println(mo.isIsAlive());
-			if (mo.isIsAlive()) {
+			
+			if (mo.isAlive()) {
 				gc.drawImage(iv.snapshot(params, null), mo.getPositionX(), mo.getPositionY(), sizeOfBlockX - 8, sizeOfBlockY - 8);
 			} else {
 				map.removeObject(iterator);
@@ -138,7 +138,7 @@ public class Drawer {
 	}
 	
 	
-	public void updateExplosions(int sizeX, int sizeY, Map map, GraphicsContext gc) {
+	public void updateExplosions(int sizeX, int sizeY, Map map, GraphicsContext gc, GraphicsContext undestroyableBlocks) {
 		ArrayList<Explosion> explosions = map.getExplosions();
 		double sizeOfBlockX = (double) sizeX / map.getSizeOfMap();
 		double sizeOfBlockY = (double) sizeY / map.getSizeOfMap();
@@ -158,8 +158,14 @@ public class Drawer {
 			} else {
 				for (Point explodedPosition : explosion.getExplodedPositions()) {
 					gc.clearRect(map.getPositionFromMap(explodedPosition.x),  map.getPositionFromMap(explodedPosition.y), sizeOfBlockX - 5, sizeOfBlockY - 5);
+					Block[][] blocks = map.getUndestroyableBlocks();
+					if (blocks[explodedPosition.y][explodedPosition.x] == Block.BRICK) {
+						map.addBlockIntoMap(explodedPosition.y, explodedPosition.x, 0);
+						updateUndestroyableBlocks(sizeX, sizeY, map, undestroyableBlocks);
+					}
 				}
 				map.removeExplosion(iterator);
+				updateUndestroyableBlocks(sizeX, sizeY, map, undestroyableBlocks);
 			}
 		}
 	}

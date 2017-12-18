@@ -54,7 +54,7 @@ public abstract class MovableObject {
 		return angle;
 	}
 
-	public boolean isIsAlive() {
+	public boolean isAlive() {
 		return isAlive;
 	}
 	

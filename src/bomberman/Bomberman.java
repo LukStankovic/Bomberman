@@ -40,6 +40,8 @@ public class Bomberman extends Application {
 	private GraphicsContext bombGc;
 	
 	private GraphicsContext explosions;
+	
+	private GraphicsContext undestroyableBlocks;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -64,7 +66,8 @@ public class Bomberman extends Application {
 		drawer = new Drawer();
 
 		Canvas unDestroyabelBlocksCanvas = new Canvas(sizeOfCanvasX, sizeOfCanvasY);
-		drawer.updateUndestroyableBlocks(sizeOfCanvasX, sizeOfCanvasY, map, unDestroyabelBlocksCanvas.getGraphicsContext2D());
+		undestroyableBlocks = unDestroyabelBlocksCanvas.getGraphicsContext2D();
+		drawer.updateUndestroyableBlocks(sizeOfCanvasX, sizeOfCanvasY, map, undestroyableBlocks);
 
 		Canvas movableObjectsCanvas = new Canvas(sizeOfCanvasX, sizeOfCanvasY);
 		movableObjects = movableObjectsCanvas.getGraphicsContext2D();
@@ -90,7 +93,7 @@ public class Bomberman extends Application {
 				map.updateMap();
 				drawer.updateMovableObjects(sizeOfCanvasX, sizeOfCanvasY, map, movableObjects);
 				drawer.updateBomb(sizeOfCanvasX, sizeOfCanvasY, map, bombGc);
-				drawer.updateExplosions(sizeOfCanvasX, sizeOfCanvasY, map, explosions);
+				drawer.updateExplosions(sizeOfCanvasX, sizeOfCanvasY, map, explosions, undestroyableBlocks);
 			}
 		};
 
