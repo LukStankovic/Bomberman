@@ -16,7 +16,7 @@ public abstract class MovableObject {
 	protected double angle;
 
 	public MovableObject(double positionX, double positionY) {
-		this(positionX, positionY, 2, 0);
+		this(positionX, positionY, 3, 0);
 	}
 
 	public MovableObject(double positionX, double positionY, double speed, double angle) {

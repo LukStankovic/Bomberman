@@ -21,6 +21,10 @@ public class Player extends MovableObject implements EventHandler<KeyEvent>{
 	private boolean moveLeft = false;
 	private boolean moveRight = false;
 	
+	private boolean placeBomb = false;
+	
+	private boolean isAlive = true;
+	
 	private Map map;
 	
 	public Player(double positionX, double positionY, Map map) {
@@ -30,77 +34,64 @@ public class Player extends MovableObject implements EventHandler<KeyEvent>{
 
 	@Override
 	public void updatePosition() {
-		//System.out.println(getPositionX() + " - " + getPositionY() + "bl: " + map.getAtPosition(positionOnBoardY, positionOnBoardX));
+		if (!isAlive) {
+			return;
+		}
+		
+		if (map.isColidingWithEnemy(positionX, positionY)) {
+			isAlive = false;
+			return;
+		}
+		
+		if (map.isColidingWithExplosion(positionX, positionY)) {
+			isAlive = false;
+			return;
+		}
 		
 		if (moveTop) {
-			/*int positionOnBoardX = (int)(getCenterPositionX()) / (700/map.getSizeOfMap());
-			int positionOnBoardY = (int)(getCenterPositionY() - speed) / (700/map.getSizeOfMap());
-			*/
+			
 			if (!map.isColliding(this, 1)) {
 				positionY -= speed;
 				angle = 0;
 			}
 		} else if (moveBottom) {
-			int positionOnBoardX = (int)(getCenterPositionX()) / (700/map.getSizeOfMap());
-			int positionOnBoardY = (int)(getCenterPositionY() + speed) / (700/map.getSizeOfMap());
-			
-			if (map.getAtPosition(positionOnBoardY, positionOnBoardX) == Block.GRASS) {
-			
-			//if (!map.isColliding(this, 2)) {
+			if (!map.isColliding(this, 2)) {
 				positionY += speed;
 				angle = 180;
 			}
-			
 		} else if (moveLeft) {
-			int positionOnBoardX = (int)(getCenterPositionX() - speed) / (700/map.getSizeOfMap());
-			int positionOnBoardY = (int)(getCenterPositionY()) / (700/map.getSizeOfMap());
-			
-			if (map.getAtPosition(positionOnBoardY, positionOnBoardX) == Block.GRASS) {
+			if (!map.isColliding(this, 3)) {
 				positionX -= speed;
 				angle = 270;
 			}
 		} else if (moveRight) {
-			int positionOnBoardX = (int)(getCenterPositionX() + speed) / (700/map.getSizeOfMap());
-			int positionOnBoardY = (int)(getCenterPositionY()) / (700/map.getSizeOfMap());
-			
-			if (map.getAtPosition(positionOnBoardY, positionOnBoardX) == Block.GRASS) {
+			if (!map.isColliding(this, 4)) {
 				positionX += speed;
 				angle = 90;
 			}
-			
+		} else if (placeBomb && !map.isIsBombPlaced()) {
+			map.placeBomb(this);
 		}
 	}
 	
 		@Override
 	public void handle(KeyEvent t) {
 		if (t.getEventType() == KeyEvent.KEY_PRESSED) {
-		/*	
-			System.out.println(
-					getPositionX() + " - " + getPositionY() + ", p: " + positionOnBoardX + " - " + positionOnBoardY 
-					+ map.getAtPosition(positionOnBoardX, positionOnBoardY)
-			);
-		*/	
-			int positionOnBoardX;
-			int positionOnBoardY;
 			switch (t.getCode()) {
 				case UP: moveTop = true; break;
 				case DOWN: moveBottom = true; break;
 				case LEFT: moveLeft = true; break;
 				case RIGHT: moveRight = true; break;
-					}
+				case SPACE: placeBomb = true; break;
+			}
 		} else if (t.getEventType() == KeyEvent.KEY_RELEASED) {
 			switch (t.getCode()) {
 				case UP: moveTop = false; break;
 				case DOWN: moveBottom = false; break;
 				case LEFT: moveLeft = false; break;
 				case RIGHT: moveRight = false; break;
+				case SPACE: placeBomb = false; break;
 			}
 		}
 	}
 }
-/*
-
-int positionOnBoardX = (int)(getPositionX()-5) / (700/map.getSizeOfMap());
-			int positionOnBoardY = (int)(getPositionY()) / (700/map.getSizeOfMap());
-
-*/
