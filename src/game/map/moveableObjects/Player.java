@@ -23,8 +23,6 @@ public class Player extends MovableObject implements EventHandler<KeyEvent>{
 	
 	private boolean placeBomb = false;
 	
-	private boolean isAlive = true;
-	
 	private Map map;
 	
 	public Player(double positionX, double positionY, Map map) {

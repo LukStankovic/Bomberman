@@ -83,7 +83,8 @@ public class Drawer {
 	
 		gc.clearRect(0, 0, sizeX, sizeY);
 	
-		for (MovableObject mo : objects) {
+		for (Iterator<MovableObject> iterator = objects.iterator(); iterator.hasNext();) {
+			MovableObject mo = iterator.next();
 			ImageView iv = new ImageView();
 			iv.setRotate(mo.getAngle());
 			SnapshotParameters params = new SnapshotParameters();
@@ -94,7 +95,13 @@ public class Drawer {
 			} else if (mo instanceof Enemy) {
 				iv = new ImageView(imgEnemy);
 			}	
-			gc.drawImage(iv.snapshot(params, null), mo.getPositionX(), mo.getPositionY(), sizeOfBlockX - 8, sizeOfBlockY - 8);
+			System.out.println(mo.isIsAlive());
+			if (mo.isIsAlive()) {
+				gc.drawImage(iv.snapshot(params, null), mo.getPositionX(), mo.getPositionY(), sizeOfBlockX - 8, sizeOfBlockY - 8);
+			} else {
+				map.removeObject(iterator);
+				gc.clearRect(mo.getPositionX(), mo.getPositionY(), sizeOfBlockY, sizeOfBlockY);
+			}
 		}
 	}
 

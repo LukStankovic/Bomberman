@@ -8,6 +8,7 @@ package game.map.moveableObjects;
 import game.map.Map;
 import game.map.undestroyableBlock.Block;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -32,5 +33,13 @@ public class MovableObjects {
 
 	public ArrayList<MovableObject> getObjects() {
 		return objects;
+	}
+	
+	public void removeObject(MovableObject object) {
+		objects.remove(object);
+	}
+	
+	public void removeObject(Iterator<MovableObject> iterator) {
+		iterator.remove();
 	}
 }

@@ -201,6 +201,10 @@ public class Map {
 		Enemy enemy = new Enemy((x * (sizeOfCanvas / sizeOfMap)) + 10, (y * (sizeOfCanvas / sizeOfMap)) + 10, this);
 		addMovableObject(enemy);
 	}
+	
+	public void removeObject(Iterator<MovableObject> iterator) {
+		movableObjects.removeObject(iterator);
+	}
 
 	public boolean isIsBombPlaced() {
 		return isBombPlaced;

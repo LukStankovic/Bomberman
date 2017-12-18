@@ -23,6 +23,10 @@ public class Enemy extends MovableObject {
 
 	@Override
 	public void updatePosition() {
-		
+		if (map.isColidingWithExplosion(positionX, positionY)) {
+			isAlive = false;
+			return;
+		}
 	}
+	
 }
