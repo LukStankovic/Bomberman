@@ -10,14 +10,20 @@ import game.map.Map;
 import game.map.drawer.Drawer;
 import game.map.loader.Loader;
 import game.map.moveableObjects.Player;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.StackPane;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.WritableImage;
+import javafx.stage.FileChooser;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -56,7 +62,7 @@ public class Bomberman extends Application {
 		int mapId = rand.nextInt(99);
 		Loader loader = new Loader();
 		loader.loadMap("./data/maps/map_" + mapId + ".map", map);
-		
+
 		player = new Player(37, 37, map);
 		map.addMovableObject(player);
 
@@ -95,12 +101,15 @@ public class Bomberman extends Application {
 					drawer.updateMovableObjects(sizeOfCanvasX, sizeOfCanvasY, map, movableObjects, undestroyableBlocks);
 					drawer.updateBomb(sizeOfCanvasX, sizeOfCanvasY, map, bombGc);
 					drawer.updateExplosions(sizeOfCanvasX, sizeOfCanvasY, map, explosions, undestroyableBlocks);
+				} else {
+					takeSnapShot(scene);
+					this.stop();
 				}
 			}
 		};
-
+		
 		timer.start();
-
+		
 	}
 
 	/**
@@ -109,5 +118,16 @@ public class Bomberman extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	private void takeSnapShot(Scene scene){
+        WritableImage wi = new WritableImage((int)scene.getWidth(), (int)scene.getHeight());
+        scene.snapshot(wi);
+        File file = new File("data/screenshot.png");
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(wi, null), "png", file);
+        } catch (IOException ex) {
+			System.err.println("Error!");
+		}
+    }
 
 }

@@ -112,7 +112,6 @@ public class Drawer {
 				}
 				map.removeObject(iterator);
 				gc.clearRect(mo.getPositionX(), mo.getPositionY(), sizeOfBlockY, sizeOfBlockY);
-				
 			}
 		}
 	}

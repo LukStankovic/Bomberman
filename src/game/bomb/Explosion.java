@@ -19,7 +19,7 @@ public class Explosion {
 
 	private long activatedAt = Long.MAX_VALUE;
 	
-	private int duration = 3000;
+	private int duration = 2000;
 
 	public Explosion(ArrayList<Point> explodedPositions) {
 		this.explodedPositions = explodedPositions;

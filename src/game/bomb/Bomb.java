@@ -23,7 +23,7 @@ public class Bomb {
 	
 	private long activatedAt = Long.MAX_VALUE;
 	
-	private int duration = 5000;
+	private int duration = 3000;
 	
 	Map map;
 
