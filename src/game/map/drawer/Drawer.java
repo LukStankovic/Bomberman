@@ -7,7 +7,6 @@ package game.map.drawer;
 
 import game.bomb.Bomb;
 import game.bomb.Explosion;
-import game.bomb.Explosions;
 import game.map.Map;
 import game.map.moveableObjects.Enemy;
 import game.map.moveableObjects.MovableObject;
@@ -16,9 +15,6 @@ import game.map.undestroyableBlock.Block;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
@@ -105,8 +101,8 @@ public class Drawer {
 			} else {
 				if (mo instanceof Player) {
 					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Game Over");
-					alert.setHeaderText("Game Over");
+					alert.setTitle("Game over!");
+					alert.setHeaderText("Umřel jsi! :-(\nTvé skóre: " + map.getScore());
 					alert.show();
 					map.setGameOver(true);
 				}
@@ -161,16 +157,15 @@ public class Drawer {
 
 			if (explosion.isActive()) {
 				ImageView iv = new ImageView(imgExplosion); 					
-				
 				for (Point explodedPosition : explosion.getExplodedPositions()) {
 					gc.drawImage(iv.snapshot(params, null), map.getPositionFromMap(explodedPosition.x),  map.getPositionFromMap(explodedPosition.y), sizeOfBlockX - 5, sizeOfBlockY - 5);
 				}
-
 			} else {
 				for (Point explodedPosition : explosion.getExplodedPositions()) {
 					gc.clearRect(map.getPositionFromMap(explodedPosition.x),  map.getPositionFromMap(explodedPosition.y), sizeOfBlockX - 5, sizeOfBlockY - 5);
 					Block[][] blocks = map.getUndestroyableBlocks();
 					if (blocks[explodedPosition.y][explodedPosition.x] == Block.BRICK) {
+						map.increaseScore(1);
 						map.addBlockIntoMap(explodedPosition.y, explodedPosition.x, 0);
 						updateUndestroyableBlocks(sizeX, sizeY, map, undestroyableBlocks);
 					}

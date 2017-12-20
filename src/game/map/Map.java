@@ -38,6 +38,8 @@ public class Map {
 	private boolean isBombPlaced = false;	
 	private boolean gameOver = false;
 	
+	private int score = 0;
+	
 	public Map(int sizeOfMap) {
 		this.sizeOfMap = sizeOfMap;
 		undestroyableBlocks = new UndestroyableBlocks(sizeOfMap);
@@ -225,5 +227,11 @@ public class Map {
 		this.gameOver = gameOver;
 	}
 
-	
+	public void increaseScore(int type) {
+		score += (type == 1 ? 10 : 100);
+	}
+
+	public int getScore() {
+		return score;
+	}
 }

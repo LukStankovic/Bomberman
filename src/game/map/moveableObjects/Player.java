@@ -6,7 +6,6 @@
 package game.map.moveableObjects;
 
 import game.map.Map;
-import game.map.undestroyableBlock.Block;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
@@ -22,7 +21,7 @@ public class Player extends MovableObject implements EventHandler<KeyEvent>{
 	private boolean moveRight = false;
 	
 	private boolean placeBomb = false;
-	
+		
 	private Map map;
 	
 	public Player(double positionX, double positionY, Map map) {
@@ -91,4 +90,5 @@ public class Player extends MovableObject implements EventHandler<KeyEvent>{
 			}
 		}
 	}
+
 }

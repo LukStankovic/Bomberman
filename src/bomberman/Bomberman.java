@@ -22,7 +22,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
-import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
 /**
