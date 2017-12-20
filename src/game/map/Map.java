@@ -32,15 +32,16 @@ public class Map {
 	private double sizeOfObject;
 
 	private UndestroyableBlocks undestroyableBlocks;
-	private MovableObjects movableObjects = new MovableObjects();;
+	private MovableObjects movableObjects = new MovableObjects();
+	;
 	private Bombs bombs = new Bombs();
 	private Explosions explosions = new Explosions();
 
-	private boolean isBombPlaced = false;	
+	private boolean isBombPlaced = false;
 	private boolean gameOver = false;
-	
+
 	private int score = 0;
-	
+
 	public Map(int sizeOfMap) {
 		if (sizeOfMap < 5 || sizeOfMap % 2 == 0) {
 			throw new WrongSizeOfMapException();
@@ -56,9 +57,15 @@ public class Map {
 
 	public void addBlockIntoMap(int x, int y, int type) {
 		switch (type) {
-			case 0: undestroyableBlocks.setBlockAtPosition(x, y, Block.GRASS);break;
-			case 1: undestroyableBlocks.setBlockAtPosition(x, y, Block.WALL);break;
-			case 2: undestroyableBlocks.setBlockAtPosition(x, y, Block.BRICK);break;
+			case 0:
+				undestroyableBlocks.setBlockAtPosition(x, y, Block.GRASS);
+				break;
+			case 1:
+				undestroyableBlocks.setBlockAtPosition(x, y, Block.WALL);
+				break;
+			case 2:
+				undestroyableBlocks.setBlockAtPosition(x, y, Block.BRICK);
+				break;
 		}
 	}
 
@@ -77,7 +84,7 @@ public class Map {
 	public ArrayList<Explosion> getExplosions() {
 		return explosions.getExplosions();
 	}
-	
+
 	public void updateMap() {
 		movableObjects.updatePositionOfAllObjects(this);
 	}
@@ -96,65 +103,59 @@ public class Map {
 	}
 
 	public boolean isCollidingWithEnemy(double posX, double posY) {
-		int positionOnBoardX = (int) (posX) / (700 / getSizeOfMap());
-		int positionOnBoardY = (int) (posY) / (700 / getSizeOfMap());
-
 		for (MovableObject mo : getMovableObjects()) {
 			if (mo instanceof Enemy) {
-				int moPositionOnBoardX = (int) (mo.getCenterPositionX() + mo.getSpeed()) / (700 / getSizeOfMap());
-				int moPositionOnBoardY = (int) (mo.getCenterPositionY()) / (700 / getSizeOfMap());
-				if (moPositionOnBoardX == positionOnBoardX && moPositionOnBoardY == positionOnBoardY) {
+				int moPositionOnBoardX = getPositionOnMap(mo.getCenterPositionX() + mo.getSpeed());
+				int moPositionOnBoardY = getPositionOnMap(mo.getCenterPositionY());
+				if (moPositionOnBoardX == getPositionOnMap(posX) && moPositionOnBoardY == getPositionOnMap(posY)) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-	
-	public boolean isCollidingWithExplosion(double posX, double posY) {
-		int positionOnBoardX = (int) (posX) / (sizeOfCanvas / getSizeOfMap());
-		int positionOnBoardY = (int) (posY) / (sizeOfCanvas / getSizeOfMap());
 
+	public boolean isCollidingWithExplosion(double posX, double posY) {
 		for (Explosion ex : getExplosions()) {
 			for (Point explodedPosition : ex.getExplodedPositions()) {
-				if (explodedPosition.x == positionOnBoardX && explodedPosition.y == positionOnBoardY) {
+				if (explodedPosition.x == getPositionOnMap(posX) && explodedPosition.y == getPositionOnMap(posY)) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-	
+
 	public boolean isCollidingWithBomb(double posX, double posY) {
 		for (Bomb bomb : getBombs()) {
 			if (getPositionOnMap(bomb.getPositionX()) == getPositionOnMap(posX) && getPositionOnMap(bomb.getPositionY()) == getPositionOnMap(posY)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	public void generateEnemies(int enemies) {
 		Random rand = new Random();
 		int enemiesCount = 0;
 		while (enemiesCount <= enemies) {
 			for (int i = 0; i < getSizeOfMap(); i++) {
 				for (int j = 0; j < getSizeOfMap(); j++) {
-						if (getAtPosition(i, j) == Block.GRASS && i != 1 && j != 1 && enemiesCount <= enemies && rand.nextInt(50) == 5) {
-							addEnemyIntoMap(j, i);
-							enemiesCount++;
-						}
+					if (getAtPosition(i, j) == Block.GRASS && i != 1 && j != 1 && enemiesCount <= enemies && rand.nextInt(50) == 5) {
+						addEnemyIntoMap(j, i);
+						enemiesCount++;
 					}
 				}
 			}
+		}
 	}
 
 	private void addEnemyIntoMap(int x, int y) {
 		Enemy enemy = new Enemy((x * (sizeOfCanvas / sizeOfMap)) + 10, (y * (sizeOfCanvas / sizeOfMap)) + 10, this);
 		addMovableObject(enemy);
 	}
-	
+
 	public void removeObject(Iterator<MovableObject> iterator) {
 		movableObjects.removeObject(iterator);
 	}
@@ -175,7 +176,7 @@ public class Map {
 		int positionOnBoardY = (int) (player.getCenterPositionY()) / (sizeOfCanvas / getSizeOfMap());
 		bombs.addBomb(
 				new Bomb(
-						(positionOnBoardX * ((double) sizeOfCanvas / (double) sizeOfMap)) + 5, 
+						(positionOnBoardX * ((double) sizeOfCanvas / (double) sizeOfMap)) + 5,
 						(positionOnBoardY * ((double) sizeOfCanvas / (double) sizeOfMap)) + 5,
 						positionOnBoardX,
 						positionOnBoardY
@@ -183,23 +184,23 @@ public class Map {
 		);
 		isBombPlaced = true;
 	}
-	
+
 	public void addExplosion(Bomb bomb) {
 		explosions.addExplosion(new Explosion(bomb.getExplodedPoints()));
 	}
-	
+
 	public void removeExplosion(Iterator<Explosion> iterator) {
 		explosions.removeExplosion(iterator);
 	}
-	
+
 	public int getPositionOnMap(double pos) {
-		return (int)((pos)/(sizeOfCanvas/getSizeOfMap() ));
+		return (int) ((pos) / (sizeOfCanvas / getSizeOfMap()));
 	}
-	
+
 	public double getPositionFromMap(int pos) {
 		return (pos * ((double) sizeOfCanvas / (double) sizeOfMap)) + 5;
 	}
-	
+
 	public int getSizeOfMap() {
 		return sizeOfMap;
 	}
@@ -214,7 +215,8 @@ public class Map {
 
 	/**
 	 * Zvýší skoŕe podle typu: 1 - blok
-	 * @param type 
+	 *
+	 * @param type
 	 */
 	public void increaseScore(int type) {
 		score += (type == 1 ? 10 : 100);
@@ -227,5 +229,5 @@ public class Map {
 	public double getSizeOfObject() {
 		return sizeOfObject;
 	}
-	
+
 }

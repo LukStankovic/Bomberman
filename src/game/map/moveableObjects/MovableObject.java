@@ -46,11 +46,11 @@ public abstract class MovableObject {
 	}
 	
 	public double getCenterPositionX() {
-		return positionX + 10;
+		return positionX + 12;
 	}
 	
 	public double getCenterPositionY() {
-		return positionY + 10;
+		return positionY + 12;
 	}
 
 	public double getSpeed() {
