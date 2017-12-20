@@ -90,7 +90,7 @@ public class Map {
 		return undestroyableBlocks.getBlockAtPosition(x, y);
 	}
 
-	public boolean isColliding(MovableObject mo, Direction direction) {
+	public boolean isCollidingWithBlock(MovableObject mo, Direction direction) {
 		if (direction == Direction.UP) {
 			int posOnBoardX1 = getPositionOnMap(mo.getPositionX());
 			int posOnBoardY1 = getPositionOnMap(mo.getPositionY());
@@ -124,7 +124,7 @@ public class Map {
 		return false;
 	}
 
-	public boolean isColidingWithEnemy(double posX, double posY) {
+	public boolean isCollidingWithEnemy(double posX, double posY) {
 		int positionOnBoardX = (int) (posX) / (700 / getSizeOfMap());
 		int positionOnBoardY = (int) (posY) / (700 / getSizeOfMap());
 
@@ -140,7 +140,7 @@ public class Map {
 		return false;
 	}
 
-	public boolean isColidingWithExplosion(double posX, double posY) {
+	public boolean isCollidingWithExplosion(double posX, double posY) {
 		int positionOnBoardX = (int) (posX) / (sizeOfCanvas / getSizeOfMap());
 		int positionOnBoardY = (int) (posY) / (sizeOfCanvas / getSizeOfMap());
 
@@ -151,6 +151,16 @@ public class Map {
 				}
 			}
 		}
+		return false;
+	}
+	
+	public boolean isCollidingWithBomb(double posX, double posY) {
+		for (Bomb bomb : getBombs()) {
+			if (getPositionOnMap(bomb.getPositionX()) == getPositionOnMap(posX) && getPositionOnMap(bomb.getPositionY()) == getPositionOnMap(posY)) {
+				return true;
+			}
+		}
+		
 		return false;
 	}
 	

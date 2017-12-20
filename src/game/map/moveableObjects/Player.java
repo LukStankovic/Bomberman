@@ -35,33 +35,33 @@ public class Player extends MovableObject implements EventHandler<KeyEvent>{
 			return;
 		}
 		
-		if (map.isColidingWithEnemy(positionX, positionY)) {
+		if (map.isCollidingWithEnemy(positionX, positionY)) {
 			isAlive = false;
 			return;
 		}
 		
-		if (map.isColidingWithExplosion(positionX, positionY)) {
+		if (map.isCollidingWithExplosion(positionX, positionY)) {
 			isAlive = false;
 			return;
 		}
 		
 		if (moveTop) {
-				if (!map.isColliding(this, Direction.UP)) {
+				if (!map.isCollidingWithBlock(this, Direction.UP)) {
 					positionY -= speed;
 					angle = 0;
 				}
 		} else if (moveBottom) {
-				if (!map.isColliding(this, Direction.DOWN)) {
+				if (!map.isCollidingWithBlock(this, Direction.DOWN)) {
 					positionY += speed;
 					angle = 180;
 				}
 		} else if (moveLeft) {
-				if (!map.isColliding(this, Direction.LEFT)) {
+				if (!map.isCollidingWithBlock(this, Direction.LEFT)) {
 					positionX -= speed;
 					angle = 270;
 				}
 		} else if (moveRight) {
-				if (!map.isColliding(this, Direction.RIGHT)) {
+				if (!map.isCollidingWithBlock(this, Direction.RIGHT)) {
 					positionX += speed;
 					angle = 90;
 				}

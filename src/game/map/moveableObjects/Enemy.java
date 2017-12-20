@@ -31,12 +31,12 @@ public class Enemy extends MovableObject {
 
 	@Override
 	public void updatePosition() {
-		if (map.isColidingWithExplosion(positionX, positionY)) {
+		if (map.isCollidingWithExplosion(positionX, positionY)) {
 			isAlive = false;
 			return;
 		}
 
-		if (map.isColliding(this, direction)) {
+		if (map.isCollidingWithBlock(this, direction) || map.isCollidingWithBomb(positionX, positionY)) {
 			positionCorrection();
 			direction = getDirectionFromInt(rand.nextInt(4) + 1);
 			return;
