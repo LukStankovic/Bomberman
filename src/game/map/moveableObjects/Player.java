@@ -41,7 +41,7 @@ public class Player extends MovableObject implements EventHandler<KeyEvent>{
 			return;
 		}
 		
-		if (map.isCollidingWithExplosion(positionX, positionY)) {
+		if (map.isCollidingWithExplosion(positionX, positionY, this)) {
 			isAlive = false;
 			return;
 		}

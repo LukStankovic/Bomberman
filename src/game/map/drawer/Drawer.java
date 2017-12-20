@@ -102,7 +102,7 @@ public class Drawer {
 				if (mo instanceof Player) {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Game over!");
-					alert.setHeaderText("Umřel jsi! :-(\nTvé skóre: " + map.getScore());
+					alert.setHeaderText("Umřel jsi! :-(\n- skóre: " + map.getScore() + ",\n- zabito: " + map.getEnemyKilled() + ",\n- zničeno bloků: " + map.getBricksDestroyed());
 					alert.show();
 					map.setGameOver(true);
 				}
@@ -166,7 +166,7 @@ public class Drawer {
 					Block[][] blocks = map.getUndestroyableBlocks();
 					if (blocks[explodedPosition.y][explodedPosition.x] == Block.BRICK) {
 						map.increaseScore(1);
-							map.addBlockIntoMap(explodedPosition.y, explodedPosition.x, 0);
+						map.addBlockIntoMap(explodedPosition.y, explodedPosition.x, 0);
 						updateUndestroyableBlocks(sizeX, sizeY, map, undestroyableBlocks);
 					}
 				}

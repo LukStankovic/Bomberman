@@ -41,6 +41,8 @@ public class Map {
 	private boolean gameOver = false;
 
 	private int score = 0;
+	private int enemyKilled = 0;
+	private int bricksDestroyed = 0;
 
 	public Map(int sizeOfMap) {
 		if (sizeOfMap < 5 || sizeOfMap % 2 == 0) {
@@ -115,10 +117,13 @@ public class Map {
 		return false;
 	}
 
-	public boolean isCollidingWithExplosion(double posX, double posY) {
+	public boolean isCollidingWithExplosion(double posX, double posY, MovableObject mo) {
 		for (Explosion ex : getExplosions()) {
 			for (Point explodedPosition : ex.getExplodedPositions()) {
 				if (explodedPosition.x == getPositionOnMap(posX) && explodedPosition.y == getPositionOnMap(posY)) {
+					if (mo instanceof Enemy) {
+						increaseScore(2);
+					}
 					return true;
 				}
 			}
@@ -214,12 +219,15 @@ public class Map {
 	}
 
 	/**
-	 * Zvýší skoŕe podle typu: 1 - blok
+	 * Zvýší skoŕe podle typu: 1 - blok, 2 - enemy
 	 *
 	 * @param type
 	 */
 	public void increaseScore(int type) {
-		score += (type == 1 ? 10 : 100);
+		switch (type) {
+			case 1: score += 10; bricksDestroyed++;break;
+			case 2: score += 100; enemyKilled++;break;
+		}
 	}
 
 	public int getScore() {
@@ -228,6 +236,14 @@ public class Map {
 
 	public double getSizeOfObject() {
 		return sizeOfObject;
+	}
+	
+	public int getEnemyKilled() {
+		return enemyKilled;
+	}
+
+	public int getBricksDestroyed() {
+		return bricksDestroyed;
 	}
 
 }

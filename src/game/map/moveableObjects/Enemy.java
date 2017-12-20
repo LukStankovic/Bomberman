@@ -29,7 +29,7 @@ public class Enemy extends MovableObject {
 
 	@Override
 	public void updatePosition() {
-		if (map.isCollidingWithExplosion(positionX, positionY)) {
+		if (map.isCollidingWithExplosion(positionX, positionY, this)) {
 			isAlive = false;
 			return;
 		}

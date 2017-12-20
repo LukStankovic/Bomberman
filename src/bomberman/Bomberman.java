@@ -9,8 +9,9 @@ import exceptions.WrongSizeOfMapException;
 import game.map.GenerateMap;
 import game.map.Map;
 import game.map.drawer.Drawer;
-import game.map.loader.Loader;
+import game.operators.Loader;
 import game.map.moveableObjects.Player;
+import game.operators.Writer;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
@@ -108,6 +109,8 @@ public class Bomberman extends Application {
 					drawer.updateExplosions(sizeOfCanvasX, sizeOfCanvasY, map, explosions, undestroyableBlocks);
 				} else {
 					takeSnapShot(scene);
+					Writer writer = new Writer("data/score.txt");
+					writer.saveScore(map.getScore(), map.getBricksDestroyed(), map.getEnemyKilled());
 					this.stop();
 				}
 			}
