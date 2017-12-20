@@ -22,6 +22,7 @@ public class Player extends MovableObject implements EventHandler<KeyEvent>{
 	
 	private boolean placeBomb = false;
 		
+	
 	private Map map;
 	
 	public Player(double positionX, double positionY, Map map) {
@@ -34,7 +35,7 @@ public class Player extends MovableObject implements EventHandler<KeyEvent>{
 		if (!isAlive) {
 			return;
 		}
-		
+
 		if (map.isCollidingWithEnemy(positionX, positionY)) {
 			isAlive = false;
 			return;
@@ -45,27 +46,21 @@ public class Player extends MovableObject implements EventHandler<KeyEvent>{
 			return;
 		}
 		
-		if (moveTop) {
-				if (!map.isCollidingWithBlock(this, Direction.UP)) {
-					positionY -= speed;
-					angle = 0;
-				}
-		} else if (moveBottom) {
-				if (!map.isCollidingWithBlock(this, Direction.DOWN)) {
-					positionY += speed;
-					angle = 180;
-				}
-		} else if (moveLeft) {
-				if (!map.isCollidingWithBlock(this, Direction.LEFT)) {
-					positionX -= speed;
-					angle = 270;
-				}
-		} else if (moveRight) {
-				if (!map.isCollidingWithBlock(this, Direction.RIGHT)) {
-					positionX += speed;
-					angle = 90;
-				}
-		} else if (placeBomb && !map.isIsBombPlaced()) {
+		if (moveTop && !map.isCollidingWithBlock(this, Direction.UP)) {
+			positionY -= speed;
+			angle = 0;
+		} else if (moveBottom && !map.isCollidingWithBlock(this, Direction.DOWN)) {
+			positionY += speed;
+			angle = 180;
+		} else if (moveLeft && !map.isCollidingWithBlock(this, Direction.LEFT)) {
+			positionX -= speed;
+			angle = 270;
+		} else if (moveRight && !map.isCollidingWithBlock(this, Direction.RIGHT)) {
+			positionX += speed;
+			angle = 90;
+		} 
+		
+		if (placeBomb && !map.isIsBombPlaced()) {
 			map.placeBomb(this);
 		}
 	}
@@ -74,20 +69,35 @@ public class Player extends MovableObject implements EventHandler<KeyEvent>{
 	public void handle(KeyEvent t) {
 		if (t.getEventType() == KeyEvent.KEY_PRESSED) {
 			switch (t.getCode()) {
-				case UP: moveTop = true; break;
-				case DOWN: moveBottom = true; break;
-				case LEFT: moveLeft = true; break;
-				case RIGHT: moveRight = true; break;
-				case SPACE: placeBomb = true; break;
+				case UP: 
+					moveTop = true; 
+					direction = Direction.UP; 
+					break;
+				case DOWN: 
+					moveBottom = true; 
+					direction = Direction.DOWN;
+					break;
+				case LEFT: 
+					moveLeft = true; 
+					direction = Direction.LEFT;
+					break;
+				case RIGHT: 
+					moveRight = true;
+					direction = Direction.RIGHT;
+					break;
+				case SPACE: 
+					placeBomb = true; 
+					break;
 			}
 		} else if (t.getEventType() == KeyEvent.KEY_RELEASED) {
 			switch (t.getCode()) {
-				case UP: moveTop = false; break;
+				case UP: moveTop = false;break;
 				case DOWN: moveBottom = false; break;
 				case LEFT: moveLeft = false; break;
 				case RIGHT: moveRight = false; break;
 				case SPACE: placeBomb = false; break;
 			}
+			direction = Direction.NONE;
 		}
 	}
 

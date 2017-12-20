@@ -15,9 +15,7 @@ import java.util.Random;
 public class Enemy extends MovableObject {
 
 	private Map map;
-	
-	private Direction direction;
-	
+		
 	private boolean start;
 	
 	private Random rand = new Random();
@@ -25,7 +23,7 @@ public class Enemy extends MovableObject {
 	public Enemy(double positionX, double positionY, Map map) {
 		super(positionX, positionY);
 		this.map = map;
-		this.direction = getDirectionFromInt(rand.nextInt(4) + 1);
+		direction = getDirectionFromInt(rand.nextInt(4) + 1);
 		this.start = true;
 	}
 
@@ -47,7 +45,7 @@ public class Enemy extends MovableObject {
 			case DOWN: positionY += speed;break;
 			case LEFT: positionX -= speed;break;
 			case RIGHT: positionX += speed;break;
-		}
+		} 
 	}
 	
 	private Direction getDirectionFromInt(int direction) {

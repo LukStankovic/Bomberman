@@ -15,6 +15,8 @@ public abstract class MovableObject {
 	protected double speed;
 	protected double angle;
 	protected boolean isAlive;
+	
+	protected Direction direction;
 
 	public MovableObject(double positionX, double positionY) {
 		this(positionX, positionY, 3, 0);
@@ -26,6 +28,11 @@ public abstract class MovableObject {
 		this.speed = speed;
 		this.angle = angle;
 		this.isAlive = true;
+		this.direction = Direction.NONE;
+	}
+
+	public Direction getDirection() {
+		return direction;
 	}
 
 	public abstract void updatePosition();

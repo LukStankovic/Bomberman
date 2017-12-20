@@ -91,37 +91,8 @@ public class Map {
 	}
 
 	public boolean isCollidingWithBlock(MovableObject mo, Direction direction) {
-		if (direction == Direction.UP) {
-			int posOnBoardX1 = getPositionOnMap(mo.getPositionX());
-			int posOnBoardY1 = getPositionOnMap(mo.getPositionY());
-			int posOnBoardX2 = getPositionOnMap(mo.getPositionX() + sizeOfObject);
-			int posOnBoardY2 = getPositionOnMap(mo.getPositionY());
-			
-			return (getAtPosition(posOnBoardY1, posOnBoardX1) != Block.GRASS || getAtPosition(posOnBoardY2, posOnBoardX2) != Block.GRASS); 
-		} else if (direction == Direction.DOWN) {
-			int posOnBoardX1 = getPositionOnMap(mo.getPositionX());
-			int posOnBoardY1 = getPositionOnMap(mo.getPositionY() + sizeOfObject);
-			int posOnBoardX2 = getPositionOnMap(mo.getPositionX() + sizeOfObject);
-			int posOnBoardY2 = getPositionOnMap(mo.getPositionY() + sizeOfObject);
-
-			return (getAtPosition(posOnBoardY1, posOnBoardX1) != Block.GRASS || getAtPosition(posOnBoardY2, posOnBoardX2) != Block.GRASS); 
-		} else if (direction == Direction.LEFT) {
-			int posOnBoardX1 = getPositionOnMap(mo.getPositionX());
-			int posOnBoardY1 = getPositionOnMap(mo.getPositionY());
-			int posOnBoardX2 = getPositionOnMap(mo.getPositionX());
-			int posOnBoardY2 = getPositionOnMap(mo.getPositionY() + sizeOfObject);
-
-			return (getAtPosition(posOnBoardY1, posOnBoardX1) != Block.GRASS || getAtPosition(posOnBoardY2, posOnBoardX2) != Block.GRASS); 
-		} else if (direction == Direction.RIGHT) {
-			int posOnBoardX1 = getPositionOnMap(mo.getPositionX() + sizeOfObject);
-			int posOnBoardY1 = getPositionOnMap(mo.getPositionY());
-			int posOnBoardX2 = getPositionOnMap(mo.getPositionX() + sizeOfObject);
-			int posOnBoardY2 = getPositionOnMap(mo.getPositionY() + sizeOfObject);
-
-			return (getAtPosition(posOnBoardY1, posOnBoardX1) != Block.GRASS || getAtPosition(posOnBoardY2, posOnBoardX2) != Block.GRASS); 
-		}
-
-		return false;
+		BoardPosition bp = new BoardPosition(mo.getPositionX(), mo.getPositionY(), this, direction);
+		return getAtPosition(bp.getY1(), bp.getX1()) != Block.GRASS || getAtPosition(bp.getY2(), bp.getX2()) != Block.GRASS;
 	}
 
 	public boolean isCollidingWithEnemy(double posX, double posY) {
@@ -139,7 +110,7 @@ public class Map {
 		}
 		return false;
 	}
-
+	
 	public boolean isCollidingWithExplosion(double posX, double posY) {
 		int positionOnBoardX = (int) (posX) / (sizeOfCanvas / getSizeOfMap());
 		int positionOnBoardY = (int) (posY) / (sizeOfCanvas / getSizeOfMap());
@@ -241,6 +212,10 @@ public class Map {
 		this.gameOver = gameOver;
 	}
 
+	/**
+	 * Zvýší skoŕe podle typu: 1 - blok
+	 * @param type 
+	 */
 	public void increaseScore(int type) {
 		score += (type == 1 ? 10 : 100);
 	}
@@ -248,4 +223,9 @@ public class Map {
 	public int getScore() {
 		return score;
 	}
+
+	public double getSizeOfObject() {
+		return sizeOfObject;
+	}
+	
 }
