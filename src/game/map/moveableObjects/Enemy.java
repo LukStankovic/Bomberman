@@ -41,7 +41,7 @@ public class Enemy extends MovableObject {
 			direction = getDirectionFromInt(rand.nextInt(4) + 1);
 			return;
 		}
-				
+
 		switch (direction) {
 			case UP: positionY -= speed;break;
 			case DOWN: positionY += speed;break;

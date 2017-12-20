@@ -5,6 +5,7 @@
  */
 package bomberman;
 
+import exceptions.WrongSizeOfMapException;
 import game.map.GenerateMap;
 import game.map.Map;
 import game.map.drawer.Drawer;
@@ -56,7 +57,12 @@ public class Bomberman extends Application {
 			gm.generate(21, 21, i);
 		}
 		*/
-		map = new Map();
+		try {
+			map = new Map();
+		} catch (WrongSizeOfMapException ex) {
+			System.out.println(ex.getMessage());
+		}
+		
 		Random rand = new Random();
 		int mapId = rand.nextInt(99);
 		Loader loader = new Loader();

@@ -166,7 +166,7 @@ public class Drawer {
 					Block[][] blocks = map.getUndestroyableBlocks();
 					if (blocks[explodedPosition.y][explodedPosition.x] == Block.BRICK) {
 						map.increaseScore(1);
-						map.addBlockIntoMap(explodedPosition.y, explodedPosition.x, 0);
+							map.addBlockIntoMap(explodedPosition.y, explodedPosition.x, 0);
 						updateUndestroyableBlocks(sizeX, sizeY, map, undestroyableBlocks);
 					}
 				}

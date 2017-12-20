@@ -5,6 +5,7 @@
  */
 package game.map;
 
+import exceptions.WrongSizeOfMapException;
 import game.bomb.Bomb;
 import game.bomb.Bombs;
 import game.bomb.Explosion;
@@ -41,6 +42,9 @@ public class Map {
 	private int score = 0;
 	
 	public Map(int sizeOfMap) {
+		if (sizeOfMap < 5 || sizeOfMap % 2 == 0) {
+			throw new WrongSizeOfMapException();
+		}
 		this.sizeOfMap = sizeOfMap;
 		undestroyableBlocks = new UndestroyableBlocks(sizeOfMap);
 		sizeOfObject = (double) (sizeOfCanvas / sizeOfMap) - 10;
@@ -156,13 +160,13 @@ public class Map {
 		while (enemiesCount <= enemies) {
 			for (int i = 0; i < getSizeOfMap(); i++) {
 				for (int j = 0; j < getSizeOfMap(); j++) {
-					if (getAtPosition(i, j) == Block.GRASS && i != 1 && j != 1 && enemiesCount <= enemies && rand.nextInt(50) == 5) {
-						addEnemyIntoMap(j, i);
-						enemiesCount++;
+						if (getAtPosition(i, j) == Block.GRASS && i != 1 && j != 1 && enemiesCount <= enemies && rand.nextInt(50) == 5) {
+							addEnemyIntoMap(j, i);
+							enemiesCount++;
+						}
 					}
 				}
 			}
-		}
 	}
 
 	private void addEnemyIntoMap(int x, int y) {
