@@ -9,6 +9,7 @@ import game.bomb.Bomb;
 import game.bomb.Bombs;
 import game.bomb.Explosion;
 import game.bomb.Explosions;
+import game.map.moveableObjects.Direction;
 import game.map.moveableObjects.Enemy;
 import game.map.moveableObjects.MovableObject;
 import game.map.moveableObjects.MovableObjects;
@@ -26,48 +27,32 @@ import java.util.Random;
 public class Map {
 
 	private int sizeOfMap;
-
+	private int sizeOfCanvas = 714;
+	
 	private UndestroyableBlocks undestroyableBlocks;
-
-	private MovableObjects movableObjects;
-
-	private Bombs bombs;
+	private MovableObjects movableObjects = new MovableObjects();;
+	private Bombs bombs = new Bombs();
+	private Explosions explosions = new Explosions();
 
 	private boolean isBombPlaced = false;
-
-	private int maxBricks = 30;
-
-	private int sizeOfCanvas = 700;
-
-	private Explosions explosions;
+	
+	private double sizeOfObject;
 	
 	public Map(int sizeOfMap) {
 		this.sizeOfMap = sizeOfMap;
 		undestroyableBlocks = new UndestroyableBlocks(sizeOfMap);
-		movableObjects = new MovableObjects();
-		bombs = new Bombs();
-		explosions = new Explosions();
+		sizeOfObject = (double) (sizeOfCanvas / sizeOfMap) - 10;
 	}
 
 	public Map() {
-		this(19);
-	}
-
-	public int getSizeOfMap() {
-		return sizeOfMap;
+		this(21);
 	}
 
 	public void addBlockIntoMap(int x, int y, int type) {
 		switch (type) {
-			case 0:
-				undestroyableBlocks.setBlockAtPosition(x, y, Block.GRASS);
-				break;
-			case 1:
-				undestroyableBlocks.setBlockAtPosition(x, y, Block.WALL);
-				break;
-			case 2:
-				undestroyableBlocks.setBlockAtPosition(x, y, Block.BRICK);
-				break;
+			case 0: undestroyableBlocks.setBlockAtPosition(x, y, Block.GRASS);break;
+			case 1: undestroyableBlocks.setBlockAtPosition(x, y, Block.WALL);break;
+			case 2: undestroyableBlocks.setBlockAtPosition(x, y, Block.BRICK);break;
 		}
 	}
 
@@ -87,7 +72,6 @@ public class Map {
 		return explosions.getExplosions();
 	}
 	
-	
 	public void updateMap() {
 		movableObjects.updatePositionOfAllObjects(this);
 	}
@@ -100,36 +84,35 @@ public class Map {
 		return undestroyableBlocks.getBlockAtPosition(x, y);
 	}
 
-	public boolean isColliding(MovableObject mo, int direction) {
-		double sizeOfObject = (double) (sizeOfCanvas / sizeOfMap) - 8;
-		if (direction == 1) {// UP
-			/*int positionOnBoardXLeft = (int) (mo.getPositionX()) / (sizeOfCanvas / getSizeOfMap());
-			int positionOnBoardYLeft = (int) (mo.getPositionY() - 2) / (sizeOfCanvas / getSizeOfMap());
-			int positionOnBoardXRight = (int) (mo.getPositionX() + sizeOfObject) / (sizeOfCanvas / getSizeOfMap());
-			int positionOnBoardYRight = (int) (mo.getPositionY() - 2) / (sizeOfCanvas / getSizeOfMap());
-
+	public boolean isColliding(MovableObject mo, Direction direction) {
+		if (direction == Direction.UP) {
+			int posOnBoardX1 = getPositionOnMap(mo.getPositionX());
+			int posOnBoardY1 = getPositionOnMap(mo.getPositionY());
+			int posOnBoardX2 = getPositionOnMap(mo.getPositionX() + sizeOfObject);
+			int posOnBoardY2 = getPositionOnMap(mo.getPositionY());
 			
-			return (getAtPosition(positionOnBoardYLeft, positionOnBoardXLeft) != Block.GRASS || getAtPosition(positionOnBoardYRight, positionOnBoardXRight) != Block.GRASS); 
-*/
-			int positionOnBoardX = (int) (mo.getCenterPositionX()) / (700 / getSizeOfMap());
-			int positionOnBoardY = (int) (mo.getCenterPositionY() - mo.getSpeed()) / (700 / getSizeOfMap());
-			
-			return getAtPosition(positionOnBoardY, positionOnBoardX) != Block.GRASS;
-		} else if (direction == 2) { // DOWN
-			int positionOnBoardX = (int) (mo.getCenterPositionX()) / (700 / getSizeOfMap());
-			int positionOnBoardY = (int) (mo.getCenterPositionY() + mo.getSpeed()) / (700 / getSizeOfMap());
+			return (getAtPosition(posOnBoardY1, posOnBoardX1) != Block.GRASS || getAtPosition(posOnBoardY2, posOnBoardX2) != Block.GRASS); 
+		} else if (direction == Direction.DOWN) {
+			int posOnBoardX1 = getPositionOnMap(mo.getPositionX());
+			int posOnBoardY1 = getPositionOnMap(mo.getPositionY() + sizeOfObject);
+			int posOnBoardX2 = getPositionOnMap(mo.getPositionX() + sizeOfObject);
+			int posOnBoardY2 = getPositionOnMap(mo.getPositionY() + sizeOfObject);
 
-			return getAtPosition(positionOnBoardY, positionOnBoardX) != Block.GRASS;
-		} else if (direction == 3) { //LEFT
-			int positionOnBoardX = (int) (mo.getCenterPositionX() - mo.getSpeed()) / (700 / getSizeOfMap());
-			int positionOnBoardY = (int) (mo.getCenterPositionY()) / (700 / getSizeOfMap());
+			return (getAtPosition(posOnBoardY1, posOnBoardX1) != Block.GRASS || getAtPosition(posOnBoardY2, posOnBoardX2) != Block.GRASS); 
+		} else if (direction == Direction.LEFT) {
+			int posOnBoardX1 = getPositionOnMap(mo.getPositionX());
+			int posOnBoardY1 = getPositionOnMap(mo.getPositionY());
+			int posOnBoardX2 = getPositionOnMap(mo.getPositionX());
+			int posOnBoardY2 = getPositionOnMap(mo.getPositionY() + sizeOfObject);
 
-			return getAtPosition(positionOnBoardY, positionOnBoardX) != Block.GRASS;
-		} else if (direction == 4) { // RIGT
-			int positionOnBoardX = (int) (mo.getCenterPositionX() + mo.getSpeed()) / (700 / getSizeOfMap());
-			int positionOnBoardY = (int) (mo.getCenterPositionY()) / (700 / getSizeOfMap());
+			return (getAtPosition(posOnBoardY1, posOnBoardX1) != Block.GRASS || getAtPosition(posOnBoardY2, posOnBoardX2) != Block.GRASS); 
+		} else if (direction == Direction.RIGHT) {
+			int posOnBoardX1 = getPositionOnMap(mo.getPositionX() + sizeOfObject);
+			int posOnBoardY1 = getPositionOnMap(mo.getPositionY());
+			int posOnBoardX2 = getPositionOnMap(mo.getPositionX() + sizeOfObject);
+			int posOnBoardY2 = getPositionOnMap(mo.getPositionY() + sizeOfObject);
 
-			return getAtPosition(positionOnBoardY, positionOnBoardX) != Block.GRASS;
+			return (getAtPosition(posOnBoardY1, posOnBoardX1) != Block.GRASS || getAtPosition(posOnBoardY2, posOnBoardX2) != Block.GRASS); 
 		}
 
 		return false;
@@ -165,23 +148,6 @@ public class Map {
 		return false;
 	}
 	
-	public void generateBricks() {
-		int bricksCount = 0;
-		Random rand = new Random();
-		while (bricksCount <= maxBricks) {
-			for (int i = 1; i < getSizeOfMap(); i++) {
-				for (int j = 1; j < getSizeOfMap(); j++) {
-					if (getAtPosition(i, j) == Block.GRASS) {
-						if (rand.nextInt(5) == 2) {
-							addBlockIntoMap(i, j, 2);
-							bricksCount++;
-						}
-					}
-				}
-			}
-		}
-	}
-
 	public void generateEnemies(int enemies) {
 		Random rand = new Random();
 		int enemiesCount = 0;
@@ -220,7 +186,6 @@ public class Map {
 	public void placeBomb(MovableObject player) {
 		int positionOnBoardX = (int) (player.getCenterPositionX()) / (sizeOfCanvas / getSizeOfMap());
 		int positionOnBoardY = (int) (player.getCenterPositionY()) / (sizeOfCanvas / getSizeOfMap());
-		System.out.println(positionOnBoardX + " - " + positionOnBoardY);
 		bombs.addBomb(
 				new Bomb(
 						(positionOnBoardX * ((double) sizeOfCanvas / (double) sizeOfMap)) + 5, 
@@ -248,4 +213,7 @@ public class Map {
 		return (pos * ((double) sizeOfCanvas / (double) sizeOfMap)) + 5;
 	}
 	
+	public int getSizeOfMap() {
+		return sizeOfMap;
+	}
 }

@@ -56,7 +56,6 @@ public class Drawer {
 		Block[][] blocks = map.getUndestroyableBlocks();
 		double sizeOfBlockX = (double) sizeX / map.getSizeOfMap();
 		double sizeOfBlockY = (double) sizeY / map.getSizeOfMap();
-
 		for (int i = 0; i < map.getSizeOfMap(); i++) {
 			for (int j = 0; j < map.getSizeOfMap(); j++) {
 				if (blocks[i][j] == Block.WALL) {
@@ -97,7 +96,7 @@ public class Drawer {
 			}	
 			
 			if (mo.isAlive()) {
-				gc.drawImage(iv.snapshot(params, null), mo.getPositionX(), mo.getPositionY(), sizeOfBlockX - 8, sizeOfBlockY - 8);
+				gc.drawImage(iv.snapshot(params, null), mo.getPositionX(), mo.getPositionY(), sizeOfBlockX - 10, sizeOfBlockY - 10);
 			} else {
 				map.removeObject(iterator);
 				gc.clearRect(mo.getPositionX(), mo.getPositionY(), sizeOfBlockY, sizeOfBlockY);

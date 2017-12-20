@@ -47,23 +47,22 @@ public class Player extends MovableObject implements EventHandler<KeyEvent>{
 		}
 		
 		if (moveTop) {
-			
-			if (!map.isColliding(this, 1)) {
+			if (!map.isColliding(this, Direction.UP)) {
 				positionY -= speed;
 				angle = 0;
 			}
 		} else if (moveBottom) {
-			if (!map.isColliding(this, 2)) {
+			if (!map.isColliding(this, Direction.DOWN)) {
 				positionY += speed;
 				angle = 180;
 			}
 		} else if (moveLeft) {
-			if (!map.isColliding(this, 3)) {
+			if (!map.isColliding(this, Direction.LEFT)) {
 				positionX -= speed;
 				angle = 270;
 			}
 		} else if (moveRight) {
-			if (!map.isColliding(this, 4)) {
+			if (!map.isColliding(this, Direction.RIGHT)) {
 				positionX += speed;
 				angle = 90;
 			}

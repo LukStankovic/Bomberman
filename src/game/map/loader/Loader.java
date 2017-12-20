@@ -24,9 +24,7 @@ public class Loader {
 				for (int j = 0; j < map.getSizeOfMap(); j++) {
 					int tmp = sc.nextInt();
 					map.addBlockIntoMap(i, j, tmp);
-					System.out.print(tmp);
 				}
-				System.out.println("");
 			}
 		} catch (FileNotFoundException ex) {
 			System.err.println("File with map was not found!");

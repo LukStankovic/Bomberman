@@ -25,9 +25,9 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public class Bomberman extends Application {
 
-	private final int sizeOfCanvasX = 700;
+	private final int sizeOfCanvasX = 714;
 
-	private final int sizeOfCanvasY = 700;
+	private final int sizeOfCanvasY = 714;
 
 	private Drawer drawer;
 
@@ -48,16 +48,16 @@ public class Bomberman extends Application {
 		/*
 		GenerateMap gm = new GenerateMap();	
 		for (int i = 0; i < 101; i++) {
-			gm.generate(19, 19, i);
+			gm.generate(21, 21, i);
 		}
-		 */
-
+		*/
 		map = new Map();
 		Random rand = new Random();
 		int mapId = rand.nextInt(99);
 		Loader loader = new Loader();
 		loader.loadMap("./data/maps/map_" + mapId + ".map", map);
-		player = new Player(40, 40, map);
+		
+		player = new Player(37, 37, map);
 		map.addMovableObject(player);
 
 		map.generateEnemies(5);
@@ -80,7 +80,7 @@ public class Bomberman extends Application {
 		
 		root.getChildren().addAll(unDestroyabelBlocksCanvas, movableObjectsCanvas, bombCanvas, explosionsCanvas);
 
-		Scene scene = new Scene(root, sizeOfCanvasX + 200, sizeOfCanvasY);
+		Scene scene = new Scene(root, sizeOfCanvasX, sizeOfCanvasY);
 		scene.setOnKeyPressed(player);
 		scene.setOnKeyReleased(player);
 		primaryStage.setTitle("Bomberman");
