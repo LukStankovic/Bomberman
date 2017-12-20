@@ -16,8 +16,13 @@ import game.map.undestroyableBlock.Block;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -74,7 +79,7 @@ public class Drawer {
 	 * @param map
 	 * @param gc 
 	 */
-	public void updateMovableObjects(int sizeX, int sizeY, Map map, GraphicsContext gc) {
+	public void updateMovableObjects(int sizeX, int sizeY, Map map, GraphicsContext gc, GraphicsContext undestroyableBlocks) {
 		ArrayList<MovableObject> objects = map.getMovableObjects();
 		
 		double sizeOfBlockX = (double) sizeX / map.getSizeOfMap();
@@ -98,8 +103,16 @@ public class Drawer {
 			if (mo.isAlive()) {
 				gc.drawImage(iv.snapshot(params, null), mo.getPositionX(), mo.getPositionY(), sizeOfBlockX - 10, sizeOfBlockY - 10);
 			} else {
+				if (mo instanceof Player) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Game Over");
+					alert.setHeaderText("Game Over");
+					alert.show();
+					map.setGameOver(true);
+				}
 				map.removeObject(iterator);
 				gc.clearRect(mo.getPositionX(), mo.getPositionY(), sizeOfBlockY, sizeOfBlockY);
+				
 			}
 		}
 	}

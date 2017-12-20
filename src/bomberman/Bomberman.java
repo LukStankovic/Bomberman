@@ -90,10 +90,12 @@ public class Bomberman extends Application {
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
-				map.updateMap();
-				drawer.updateMovableObjects(sizeOfCanvasX, sizeOfCanvasY, map, movableObjects);
-				drawer.updateBomb(sizeOfCanvasX, sizeOfCanvasY, map, bombGc);
-				drawer.updateExplosions(sizeOfCanvasX, sizeOfCanvasY, map, explosions, undestroyableBlocks);
+				if (!map.isGameOver()) {
+					map.updateMap();
+					drawer.updateMovableObjects(sizeOfCanvasX, sizeOfCanvasY, map, movableObjects, undestroyableBlocks);
+					drawer.updateBomb(sizeOfCanvasX, sizeOfCanvasY, map, bombGc);
+					drawer.updateExplosions(sizeOfCanvasX, sizeOfCanvasY, map, explosions, undestroyableBlocks);
+				}
 			}
 		};
 

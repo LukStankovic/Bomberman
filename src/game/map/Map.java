@@ -28,15 +28,15 @@ public class Map {
 
 	private int sizeOfMap;
 	private int sizeOfCanvas = 714;
-	
+	private double sizeOfObject;
+
 	private UndestroyableBlocks undestroyableBlocks;
 	private MovableObjects movableObjects = new MovableObjects();;
 	private Bombs bombs = new Bombs();
 	private Explosions explosions = new Explosions();
 
-	private boolean isBombPlaced = false;
-	
-	private double sizeOfObject;
+	private boolean isBombPlaced = false;	
+	private boolean gameOver = false;
 	
 	public Map(int sizeOfMap) {
 		this.sizeOfMap = sizeOfMap;
@@ -216,4 +216,14 @@ public class Map {
 	public int getSizeOfMap() {
 		return sizeOfMap;
 	}
+
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+
+	
 }
