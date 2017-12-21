@@ -1,2 +1,10 @@
 20. 12. 2017 21:33:35: 100 bodů, zničených bloků: 0, zabito nepřátel: 0
 20. 12. 2017 21:35:30: 210 bodů, zničených bloků: 1, zabito nepřátel: 1
+20. 12. 2017 22:26:09: 0 bodů, zničených bloků: 0, zabito nepřátel: 0
+20. 12. 2017 22:26:29: 0 bodů, zničených bloků: 0, zabito nepřátel: 0
+20. 12. 2017 22:27:03: 120 bodů, zničených bloků: 2, zabito nepřátel: 1
+21. 12. 2017 07:42:35: 120 bodů, zničených bloků: 2, zabito nepřátel: 1
+21. 12. 2017 12:47:20: 160 bodů, zničených bloků: 6, zabito nepřátel: 1
+21. 12. 2017 12:48:47: 0 bodů, zničených bloků: 0, zabito nepřátel: 0
+21. 12. 2017 12:53:50: 0 bodů, zničených bloků: 0, zabito nepřátel: 0
+21. 12. 2017 12:56:38: 30 bodů, zničených bloků: 3, zabito nepřátel: 0

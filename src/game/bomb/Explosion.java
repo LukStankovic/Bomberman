@@ -5,7 +5,6 @@
  */
 package game.bomb;
 
-import game.map.Map;
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -19,7 +18,7 @@ public class Explosion {
 
 	private long activatedAt = Long.MAX_VALUE;
 	
-	private int duration = 2000;
+	private int duration = 1000;
 
 	public Explosion(ArrayList<Point> explodedPositions) {
 		this.explodedPositions = explodedPositions;

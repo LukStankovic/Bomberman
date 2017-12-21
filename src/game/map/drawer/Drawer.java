@@ -127,15 +127,12 @@ public class Drawer {
 		for (Iterator<Bomb> iterator = bombs.iterator(); iterator.hasNext();) {
 			Bomb bomb = iterator.next();
 			gc.clearRect(0, 0, sizeX, sizeY);
-
+			SnapshotParameters params = new SnapshotParameters();
+			params.setFill(Color.TRANSPARENT);
 			if (bomb.isActive()) {
 				ImageView iv = new ImageView(imgBomb);
-				SnapshotParameters params = new SnapshotParameters();
-				params.setFill(Color.TRANSPARENT);
 				gc.drawImage(iv.snapshot(params, null), bomb.getPositionX(), bomb.getPositionY(), sizeOfBlockX - 8, sizeOfBlockY - 8);
 			} else {
-				SnapshotParameters params = new SnapshotParameters();
-				params.setFill(Color.TRANSPARENT);
 				gc.clearRect(bomb.getPositionX(), bomb.getPositionY(), sizeOfBlockX - 8, sizeOfBlockY - 8);
 				map.addExplosion(bomb);
 				map.setIsBombPlaced(iterator, false);
@@ -158,7 +155,9 @@ public class Drawer {
 			if (explosion.isActive()) {
 				ImageView iv = new ImageView(imgExplosion); 					
 				for (Point explodedPosition : explosion.getExplodedPositions()) {
-					gc.drawImage(iv.snapshot(params, null), map.getPositionFromMap(explodedPosition.x),  map.getPositionFromMap(explodedPosition.y), sizeOfBlockX - 5, sizeOfBlockY - 5);
+					if (map.getAtPosition(explodedPosition.x, explodedPosition.y) != Block.WALL) {
+						gc.drawImage(iv.snapshot(params, null), map.getPositionFromMap(explodedPosition.x),  map.getPositionFromMap(explodedPosition.y), sizeOfBlockX - 5, sizeOfBlockY - 5);
+					}
 				}
 			} else {
 				for (Point explodedPosition : explosion.getExplodedPositions()) {
